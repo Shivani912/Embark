@@ -18,7 +18,7 @@ contract transcriptVerification {
         _;
     }
 
-    function addtranscriptHash(address _transcriptOwner,bytes32 _transcriptHash) public onlyOwner {
+    function addTranscriptHash(address _transcriptOwner,bytes32 _transcriptHash) public onlyOwner {
         transcript[_transcriptOwner] = _transcriptHash;
     }
 
