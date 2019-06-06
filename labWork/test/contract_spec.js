@@ -40,12 +40,12 @@ contract("transcriptVerification", function () {
     }
   })
   //
-  it("views transcript successfully", async function () {
+  it("student views transcript successfully", async function () {
     let transcript = await transcriptVerification.methods.viewTranscript().call({from:accounts[2]});
     assert.ok(transcript);
   })
 
-  it("transcript does not exit", async function () {
+  it("student's transcript does not exit", async function () {
       try{
         await transcriptVerification.methods.viewTranscript().call({from:accounts[1]});
       }
@@ -53,4 +53,9 @@ contract("transcriptVerification", function () {
         assert(error.message.includes("transcript does not exist"));
       }
     })
+
+  it("verifier checks transcript's authenticity is correct", async function () {
+    let result = await transcriptVerification.methods.isTranscriptAuthentic(accounts[2], _transcriptHash).send();
+    assert.ok(result);
+  })
 })
