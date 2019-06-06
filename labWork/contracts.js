@@ -52,9 +52,8 @@ module.exports = {
     //strategy: 'implicit',
 
     contracts: {
-      // example:
-     	"VerifyOwner": {
-           args: []
+     	"transcriptVerification": {
+          //  args: []
       }
     }
   },
