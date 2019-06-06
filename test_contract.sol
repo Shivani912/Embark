@@ -20,4 +20,15 @@ contract transcriptVerification {
     function viewTranscript() public view returns(bytes32) {
         return transcript[msg.sender];
     }
+    
+    function isTranscriptAuthentic(address _transcriptOwner, bytes32 _transcriptHash) public returns(bool) {
+        if(transcript[_transcriptOwner] == _transcriptHash) {
+            count(_transcriptOwner);
+            emit transcriptViewed(msg.sender, block.number);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
