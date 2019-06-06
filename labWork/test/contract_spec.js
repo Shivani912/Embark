@@ -45,5 +45,12 @@ contract("transcriptVerification", function () {
     assert.ok(transcript);
   })
 
- 
+  it("transcript does not exit", async function () {
+      try{
+        await transcriptVerification.methods.viewTranscript().call({from:accounts[1]});
+      }
+      catch(error){
+        assert(error.message.includes("transcript does not exist"));
+      }
+    })
 })
