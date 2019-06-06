@@ -23,11 +23,11 @@ contract transcriptVerification {
     }
 
     function viewTranscript() public view returns(bytes32) {
+        require(transcript[msg.sender] != bytes32(0), "transcript does not exist");
         return transcript[msg.sender];
     }
 
-    function isTranscriptAuthentic(address _transcriptOwner, bytes32 _transcriptHash)
-    public view onlyAuthentic(_transcriptOwner,_transcriptHash) returns(bool) {
+    function isTranscriptAuthentic(address _transcriptOwner, bytes32 _transcriptHash) public view onlyAuthentic(_transcriptOwner,_transcriptHash) returns(bool) {
         return true;
     }
 }

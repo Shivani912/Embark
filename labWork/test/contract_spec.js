@@ -20,9 +20,23 @@ config({
 
 contract("transcriptVerification", function () {
   this.timeout(0);
-
+  // constructor
   it("Constructor runs successfully", async function () {
-    let address = transcriptVerification.options.address;
+    let address = await transcriptVerification.options.address;
     assert.ok(address);
   })
+  //
+  it("views transcript successfully", async function () {
+    let transcript = await transcriptVerification.methods.viewTranscript().call({from:accounts[2]});
+    assert.ok(transcript);
+  })
+
+  // it("no transcript", async function () {
+  //   try{
+  //     await transcriptVerification.methods.viewTranscript().call({from:accounts[1]});
+  //   }
+  //   catch(err){
+  //     assert.equal(err.message,"transcript does not exist");
+  //   }
+  // })
 })
