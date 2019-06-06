@@ -1,4 +1,4 @@
-pragma solidity 0.5.8;
+pragma solidity 0.5.0;
 
 contract transcriptVerification {
     mapping(address => bytes32) transcript;
@@ -12,6 +12,11 @@ contract transcriptVerification {
         require(msg.sender == owner, "you are not the owner");
         _;
     }
+
+    modifier onlyAuthentic(address _transcriptOwner, bytes32 _transcriptHash) {
+        require(transcript[_transcriptOwner] == _transcriptHash, "Transcript not authentic");
+        _;
+    }
     
     function addtranscriptHash(address _transcriptOwner,bytes32 _transcriptHash) public onlyOwner {
         transcript[_transcriptOwner] = _transcriptHash;
@@ -21,14 +26,8 @@ contract transcriptVerification {
         return transcript[msg.sender];
     }
     
-    function isTranscriptAuthentic(address _transcriptOwner, bytes32 _transcriptHash) public returns(bool) {
-        if(transcript[_transcriptOwner] == _transcriptHash) {
-            count(_transcriptOwner);
-            emit transcriptViewed(msg.sender, block.number);
+    function isTranscriptAuthentic(address _transcriptOwner, bytes32 _transcriptHash) public view onlyAuthentic(_transcriptOwner,_transcriptHash) returns(bool) {
             return true;
-        }
-        else {
-            return false;
-        }
+        
     }
 }

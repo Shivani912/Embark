@@ -1,6 +1,6 @@
 // /*global contract, config, it, assert*/
-/*
-const SimpleStorage = require('Embark/contracts/SimpleStorage');
+
+const VerifyOwner = require('Embark/contracts/VerifyOwner');
 
 let accounts;
 
@@ -13,22 +13,33 @@ config({
   //  ]
   //},
   contracts: {
-    "SimpleStorage": {
-      args: [100]
+    "VerifyOwner": {
+      
     }
   }
 }, (_err, web3_accounts) => {
   accounts = web3_accounts
 });
 
-contract("SimpleStorage", function () {
+contract("VerifyOwner", function () {
   this.timeout(0);
 
-  it("should set constructor value", async function () {
-    let result = await SimpleStorage.methods.storedData().call();
-    assert.strictEqual(parseInt(result, 10), 100);
+  it("should set constructor value" , async function () {
+
+   let result = await VerifyOwner.methods.IsOwner().call();
+  
+   assert.ok(result,"all okay!");
   });
 
+it("should set constructor value" , async function () {
+	try {
+   let result = await VerifyOwner.methods.IsOwner().call({from: accounts[1]});
+  }
+   catch(err) {
+	assert(err.message.includes("you are not the owner"));
+}
+  });
+/*
   it("set storage value", async function () {
     await SimpleStorage.methods.set(150).send();
     let result = await SimpleStorage.methods.get().call();
@@ -38,6 +49,7 @@ contract("SimpleStorage", function () {
   it("should have account with balance", async function() {
     let balance = await web3.eth.getBalance(accounts[0]);
     assert.ok(parseInt(balance, 10) > 0);
-  });
-}
 */
+  });
+
+
