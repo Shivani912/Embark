@@ -1,6 +1,7 @@
 const transcriptVerification = require('Embark/contracts/transcriptVerification');
 const _transcriptHash = "0x54e6289e14c7b0e7ad9acc2dfc4c1e3d027d0eef7f5c4c3fe7c292761d0e06a6"
 let accounts;
+const _fakeTranscriptHash = "0x54e6289e14c7b0e7ad9acc2dfc4c1e3d027d0eef7f5c4c3fe7c292761d0e06a9"
 
 // For documentation please see https://embark.status.im/docs/contracts_testing.html
 config({
@@ -57,5 +58,15 @@ contract("transcriptVerification", function () {
   it("verifier checks transcript's authenticity is correct", async function () {
     let result = await transcriptVerification.methods.isTranscriptAuthentic(accounts[2], _transcriptHash).send();
     assert.ok(result);
+  })
+
+  it("verifier checks if transcript authenticity is incorrect", async function () {
+    try{
+      await transcriptVerification.methods.isTranscriptAuthentic(accounts[2],_fakeTranscriptHash).send();
+      assert(false);
+    }
+    catch(error) {
+      assert(error.message.includes("Transcript not authentic"))
+    }
   })
 })
