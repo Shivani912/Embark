@@ -4,6 +4,16 @@ All the code in this branch is a part of my assignment for George Brown College.
 
 It consists of a smart contract (transcriptVerification.sol) under the labWork/contracts folder and test code (contract_spec.js) under the labWork/test folder.
 
+# Design Pattern:
+
+The smart contract implements two design patterns as discussed in the class.
+
+    1. Verification pattern : 
+        Address verification and data verification is implemented using modifiers. Address verification checks the owner and data verification checks the transcript hash.
+        
+    2. Off-chain Data Storage Pattern: 
+        Since transcripts cannot be stored on-chain due to the storage problem, actual transcripts are stored off-chain in database and only the transcript hashes are stored on-chain. Therefore to verify a transcript, you have to hash the transcript file that is in database and compare its authenticity with its hash that is on-chain.
+
 # Smart Contract:
 
 The contract consists of three functions:
@@ -75,3 +85,8 @@ There is one test case to check if the constructor successfully adds owner's add
 ## Note: Embark has a bug. 
 
 When you use the 'embark test' command, all the tests work properly. But, when you use the '--coverage' parameter with it, for some reason, it is not able to access the viewTranscript function and thus, makes the related tests fail with only 77% of code coverage. 
+
+## References:
+
+1. Off-chain data storage pattern: https://www.researchgate.net/publication/325439030_A_Pattern_Collection_for_Blockchain-based_Applications
+2. Embark documentation: https://embark.status.im/docs/overview.html
